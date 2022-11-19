@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="primary_color">#2C2646</color>
     <color name="secondary_black">#AEABC2</color>
 
     <color name="icon_iris">#5D3FD3</color>
