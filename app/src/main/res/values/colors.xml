@@ -7,4 +7,15 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="secondary_black">#AEABC2</color>
+
+    <color name="icon_iris">#5D3FD3</color>
+    <color name="icon_light_iris">#1A5D3FD3</color>
+
+    <color name="icon_reddish_orange">#F46040</color>
+    <color name="icon_light_reddish_orange">#1AF46040</color>
+
+    <color name="icon_green">#16D112</color>
+    <color name="icon_light_green">#1A16D112</color>
 </resources>

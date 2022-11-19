@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="iconColor">
+        <item>@color/icon_iris</item>
+        <item>@color/icon_reddish_orange</item>
+        <item>@color/icon_green</item>
+    </array>
+
+    <array name="iconBgColor">
+        <item>@color/icon_light_iris</item>
+        <item>@color/icon_light_reddish_orange</item>
+        <item>@color/icon_light_green</item>
+    </array>
+
+</resources>

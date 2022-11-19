@@ -12,7 +12,7 @@
         <activity
             android:name=".Splashscreen"
             android:exported="true">
-            android:theme="@style/Theme.themeNoActionBarLight">
+            android:theme="@style/themeNoActionBarLight">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
