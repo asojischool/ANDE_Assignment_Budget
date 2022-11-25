@@ -3,26 +3,26 @@
     <item
         android:id="@+id/pageHome"
         android:enabled="true"
-        android:icon="@drawable/ic_round_home"
-        android:title="Home"/>
-    <item
-        android:id="@+id/page_2"
-        android:enabled="true"
-        android:icon="@drawable/ic_round_account_balance_wallet"
-        android:title="Expense"/>
-    <item
-        android:id="@+id/page_2"
-        android:enabled="true"
-        android:icon="@drawable/ic_round_account_balance_wallet"
+        android:icon="@drawable/ic_icon_budget"
         android:title="Budget"/>
     <item
         android:id="@+id/page_2"
         android:enabled="true"
         android:icon="@drawable/ic_round_account_balance_wallet"
-        android:title="Analytic"/>
+        android:title="Bills"/>
     <item
         android:id="@+id/page_2"
         android:enabled="true"
-        android:icon="@drawable/ic_round_account_balance_wallet"
-        android:title="Setting"/>
+        android:icon="@drawable/ic_icon_expense"
+        android:title="Expense"/>
+    <item
+        android:id="@+id/page_2"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_analytics_24"
+        android:title="Analytics"/>
+    <item
+        android:id="@+id/page_2"
+        android:enabled="true"
+        android:icon="@drawable/ic_round_settings"
+        android:title="Settings"/>
 </menu>
