@@ -55,12 +55,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         changeDate(dateToString(today.get(Calendar.MONTH)), today.get(Calendar.YEAR));
 
         builder = new MonthPickerDialog.Builder(MainActivity.this,
-            new MonthPickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(int selectedMonth, int selectedYear) {
-                    changeDate(dateToString(selectedMonth), selectedYear);
-                }
-            }, today.get(Calendar.YEAR), today.get(Calendar.MONTH)
+                new MonthPickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(int selectedMonth, int selectedYear) {
+                        changeDate(dateToString(selectedMonth), selectedYear);
+                    }
+                }, today.get(Calendar.YEAR), today.get(Calendar.MONTH)
         );
 
         builder.setActivatedMonth(Calendar.JULY)

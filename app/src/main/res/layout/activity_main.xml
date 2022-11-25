@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/iconHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00FFFFFF"
+        android:drawableTop="@drawable/ic_round_history"
+        android:drawableTint="@color/primary_color"
+        android:text="History"
+        android:textColor="@color/primary_color"
+        android:textSize="10sp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tvTotalSpentTitle"
         android:layout_width="wrap_content"
@@ -65,6 +79,17 @@
             android:layout_height="match_parent"
             android:layout_margin="10dp">
 
+            <Button
+                android:id="@+id/btnSetUpBudget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Set Up Budget"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvMonthlyBudget" />
+
             <TextView
                 android:id="@+id/tvLefToSpend"
                 android:layout_width="wrap_content"
@@ -116,10 +141,10 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_begin="176dp" />
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCategorySpent"
