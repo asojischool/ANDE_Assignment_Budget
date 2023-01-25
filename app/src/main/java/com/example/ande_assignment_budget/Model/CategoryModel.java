@@ -4,16 +4,16 @@ import android.graphics.drawable.Drawable;
 
 public class CategoryModel {
 
+    private String catName;
+    private String catSpent;
+    private int catIcon;
+
     public CategoryModel(String catName, String catSpent, int catIcon) {
         this.catName = catName;
         this.catSpent = catSpent;
         this.catIcon = catIcon;
         count++;
     }
-
-    private String catName;
-    private String catSpent;
-    private int catIcon;
 
     private int count;
 

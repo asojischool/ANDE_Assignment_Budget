@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,9 +19,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ArrayList<CategoryModel> categoryModels;
     private MonthPickerDialog.Builder builder;
@@ -37,8 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setUpCategoryModels() {
         categoryModels = new ArrayList<>();
-        categoryModels.add(new CategoryModel("Food",  "$300", R.drawable.ic_baseline_fastfood));
-        categoryModels.add(new CategoryModel("Transport","$400", R.drawable.ic_baseline_directions_car));
+        categoryModels.add(new CategoryModel("Food", "$300", R.drawable.ic_baseline_fastfood));
+        categoryModels.add(new CategoryModel("Transport", "$400", R.drawable.ic_baseline_directions_car));
         categoryModels.add(new CategoryModel("Grocery", "$800", R.drawable.ic_baseline_local_grocery_store));
     }
 
@@ -51,16 +53,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void monthYearPickerDialog() {
-        Calendar today = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        Calendar today = Calendar.getInstance(TimeZone.getTimeZone("SGT"));
         changeDate(dateToString(today.get(Calendar.MONTH)), today.get(Calendar.YEAR));
 
         builder = new MonthPickerDialog.Builder(MainActivity.this,
-            new MonthPickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(int selectedMonth, int selectedYear) {
-                    changeDate(dateToString(selectedMonth), selectedYear);
-                }
-            }, today.get(Calendar.YEAR), today.get(Calendar.MONTH)
+                (selectedMonth, selectedYear) -> changeDate(dateToString(selectedMonth), selectedYear),
+                today.get(Calendar.YEAR), today.get(Calendar.MONTH)
         );
 
         builder.setActivatedMonth(Calendar.JULY)
@@ -73,17 +71,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Intent i;
-        switch (v.getId()) {
-            case R.id.btnDatePicker:
-                builder.build().show();
-                break;
+        if (v.getId() == R.id.btnDatePicker) {
+            builder.build().show();
         }
     }
 
     public void changeDate(String selectedMonth, int selectedYear) {
         Button btnDatePicker = findViewById(R.id.btnDatePicker);
-        btnDatePicker.setText(selectedMonth + " " + selectedYear);
+        btnDatePicker.setText(String.format(Locale.ENGLISH, "%s %d", selectedMonth, selectedYear));
     }
 
     public String dateToString(int month) {
