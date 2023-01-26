@@ -1,24 +1,25 @@
 package com.example.ande_assignment_budget;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.ande_assignment_budget.Adapter.CategorySpent_RecyclerViewAdapter;
 import com.example.ande_assignment_budget.Model.CategoryModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         monthYearPickerDialog();
         setUpCategoryModels();
         setRecyclerList();
+        setBottomNavigationBar();
     }
 
     private void setUpCategoryModels() {
@@ -84,4 +86,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public String dateToString(int month) {
         return new DateFormatSymbols().getMonths()[month];
     }
+
+    // navigation bar use for all function
+    public void setBottomNavigationBar() {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.miBudget);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent i;
+                switch(item.getItemId()) {
+                    case R.id.miSetting:
+                        i = new Intent(MainActivity.this, Setting.class);
+                        startActivity(i);
+                        break;
+                }
+                return true;
+            }
+        });
+    }
+
 }

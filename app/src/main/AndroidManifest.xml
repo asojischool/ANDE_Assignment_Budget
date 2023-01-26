@@ -10,6 +10,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ANDE_Assignment_Budget">
         <activity
+            android:name=".Setting"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Login"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ExpenseActivity"
             android:exported="false" />
         <activity
