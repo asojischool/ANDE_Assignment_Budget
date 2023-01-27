@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
+
 public class Splashscreen extends AppCompatActivity {
 
     @Override
@@ -16,15 +18,27 @@ public class Splashscreen extends AppCompatActivity {
 
             public void run() {
                 try {
-                    // sleep time in milliseconds (3000 = 3sec)
-                    sleep(4000);
+
+                    // to skip splashscreen, change skip to true
+                    boolean skip =  false;
+                    if(!skip) {
+                        sleep(4000);
+                    }
+
                 }  catch(InterruptedException e) {
                     // Trace the error
                     e.printStackTrace();
                 } finally
                 {
-                    // Launch the MainActivity class
-                    Intent i = new Intent(Splashscreen.this, Login.class);
+                    // Change the string to target any activity on start up
+                    Class targetActivity = null;
+                    try {
+                        targetActivity = Class.forName("com.example.ande_assignment_budget.Login");
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+                    Intent i = new Intent(Splashscreen.this, targetActivity);
                     startActivity(i);
                     finish();
                 }
