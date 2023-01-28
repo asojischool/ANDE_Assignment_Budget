@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15sp"
+    android:padding="15dp"
     tools:context=".Login">
 
     <TextView
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:fontFamily="@font/dm_sans_bold"
-        android:text="Budget"
+        android:text="Login"
         android:textColor="#6347EB"
         android:textSize="35sp"
         app:layout_constraintBottom_toTopOf="@+id/tvErrorMessage"
@@ -65,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etEmail" />
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"

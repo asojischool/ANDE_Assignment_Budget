@@ -20,7 +20,7 @@ public class Splashscreen extends AppCompatActivity {
                 try {
 
                     // to skip splashscreen, change skip to true
-                    boolean skip =  false;
+                    boolean skip =  true;
                     if(!skip) {
                         sleep(4000);
                     }
@@ -33,7 +33,7 @@ public class Splashscreen extends AppCompatActivity {
                     // Change the string to target any activity on start up
                     Class targetActivity = null;
                     try {
-                        targetActivity = Class.forName("com.example.ande_assignment_budget.Login");
+                        targetActivity = Class.forName("com.example.ande_assignment_budget.Setting");
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }

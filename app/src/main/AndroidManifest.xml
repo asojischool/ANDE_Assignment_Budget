@@ -10,6 +10,35 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ANDE_Assignment_Budget">
         <activity
+            android:name=".SetBudget"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".BudgetHistory"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".UpdateProfile"
+            android:exported="false"
+            android:theme="@style/Theme.Transparent_Action_Bar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="Update Profile" />
+        </activity>
+        <activity
+            android:name=".Register"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Setting"
             android:exported="false">
             <meta-data
