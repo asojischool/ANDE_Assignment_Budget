@@ -7,7 +7,7 @@
     tools:context=".Setting">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -27,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/tvProfile"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
         app:srcCompat="@drawable/profile_picture" />
 
@@ -50,6 +50,7 @@
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/ic_baseline_person"
         android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right"
+        android:onClick="onClick"
         android:paddingHorizontal="50dp"
         android:text="Update Profile"
         android:textAlignment="textStart"
@@ -74,8 +75,11 @@
         android:textAlignment="textStart"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@+id/btnUpdateProfile"
-        tools:layout_editor_absoluteX="0dp" />
+        android:onClick="onClick"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnUpdateProfile" />
 
     <Button
         android:id="@+id/btnLogout"
@@ -83,11 +87,11 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="50dp"
         android:backgroundTint="#FF3737"
+        android:onClick="onClick"
         android:paddingVertical="10dp"
         android:text="Logout"
         android:textAllCaps="false"
         android:textSize="20dp"
-        android:onClick="onClick"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

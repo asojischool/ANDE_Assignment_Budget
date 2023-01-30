@@ -50,6 +50,11 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
                 i = new Intent(Setting.this, Login.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
+                break;
+
+            case R.id.btnUpdateProfile:
+                i = new Intent(Setting.this, UpdateProfile.class);
+                startActivity(i);
         }
     }
 }
