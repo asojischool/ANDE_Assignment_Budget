@@ -33,7 +33,7 @@ public class Splashscreen extends AppCompatActivity {
                     // Change the string to target any activity on start up
                     Class targetActivity = null;
                     try {
-                        targetActivity = Class.forName("com.example.ande_assignment_budget.Setting");
+                        targetActivity = Class.forName("com.example.ande_assignment_budget.MainActivity");
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
