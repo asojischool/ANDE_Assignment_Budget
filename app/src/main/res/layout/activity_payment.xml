@@ -24,7 +24,6 @@
         android:layout_height="40dp"
         android:background="@android:color/transparent"
         android:drawableEnd="@drawable/ic_baseline_arrow_drop_down"
-        android:fontFamily="@font/dm_sans"
         android:onClick="onClick"
         android:text="September 2020"
         android:textColor="@color/primary_color"
