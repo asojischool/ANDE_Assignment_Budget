@@ -4,10 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/rounded_recyclerview_ui"
-    android:padding="30dp"
     android:layout_margin="10dp">
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clLogoBackground"
@@ -22,8 +19,8 @@
 
         <ImageView
             android:id="@+id/ivCatLogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/ic_baseline_directions_car"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,17 +36,30 @@
         android:layout_marginStart="20dp"
         android:fontFamily="@font/dm_sans_regular"
         android:text="Transport"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/clLogoBackground"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/tvDollar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/etCatBudget"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <EditText
         android:id="@+id/etCatBudget"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/dm_sans_regular"
-        android:text="$800"
-        android:textColor="@color/secondary_black"
+        android:inputType="numberDecimal"
+        android:text="800"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

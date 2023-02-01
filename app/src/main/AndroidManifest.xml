@@ -37,10 +37,12 @@
         </activity>
         <activity
             android:name=".SetBudget"
-            android:exported="false">
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/themeActionBarLight">
             <meta-data
                 android:name="android.app.lib_name"
-                android:value="" />
+                android:value="Set Monthly Budget" />
         </activity>
         <activity
             android:name=".BudgetHistory"

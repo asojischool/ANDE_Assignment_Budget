@@ -10,41 +10,61 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.285">
 
         <TextView
             android:id="@+id/tvTotalBudgetTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
             android:fontFamily="@font/dm_sans_bold"
             android:text="Total Budget: "
+            android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvDollar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/dm_sans_bold"
+            android:text="$"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTotalBudgetAmount"
+            app:layout_constraintEnd_toStartOf="@+id/tvTotalBudgetAmount"
+            app:layout_constraintTop_toTopOf="@+id/tvTotalBudgetAmount" />
 
         <TextView
             android:id="@+id/tvTotalBudgetAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/dm_sans_bold"
-            android:text="$1812"
+            android:text="1812"
+            android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/tvTotalBudgetTitle" />
 
         <TextView
             android:id="@+id/tvAllocatedBudgetTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/dm_sans_bold"
             android:text="Allocated Budget"
+            android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTotalBudgetTitle" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvBudgetCategory"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="370dp"
+            android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,10 +74,15 @@
             android:id="@+id/btnSetBudget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/dm_sans_bold"
+            android:onClick="onClick"
+            android:paddingVertical="10dp"
             android:text="Set Budget"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rvBudgetCategory"
-            tools:layout_editor_absoluteX="20dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvBudgetCategory" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

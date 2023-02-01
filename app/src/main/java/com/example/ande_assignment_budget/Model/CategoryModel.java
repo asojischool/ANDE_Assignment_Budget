@@ -5,17 +5,22 @@ import android.graphics.drawable.Drawable;
 public class CategoryModel {
 
     private String catName;
-    private String catSpent;
+    private double catSpent;
     private int catIcon;
+    private int catId;
 
-    public CategoryModel(String catName, String catSpent, int catIcon) {
+    public CategoryModel(String catName, double catSpent, int catIcon) {
         this.catName = catName;
         this.catSpent = catSpent;
         this.catIcon = catIcon;
-        count++;
     }
 
-    private int count;
+    public CategoryModel(String catName, double catSpent, int catIcon, int catId) {
+        this.catName = catName;
+        this.catSpent = catSpent;
+        this.catIcon = catIcon;
+        this.catId = catId;
+    }
 
     public String getCatName() {
         return catName;
@@ -25,11 +30,11 @@ public class CategoryModel {
         this.catName = catName;
     }
 
-    public String getCatSpent() {
+    public double getCatSpent() {
         return catSpent;
     }
 
-    public void setCatSpent(String catSpent) {
+    public void setCatSpent(double catSpent) {
         this.catSpent = catSpent;
     }
 
@@ -41,7 +46,7 @@ public class CategoryModel {
         this.catIcon = catIcon;
     }
 
-    public int getCount() {
-        return count;
+    public int getCatId() {
+        return catId;
     }
 }
