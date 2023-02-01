@@ -64,6 +64,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".BillsActivity"></activity>
+        <activity
+            android:name=".BillsEditActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Action_Bar_Back_Button"
+            >
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="Add Bill" /></activity>
+        <activity
+            android:name=".BillsAddActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Action_Bar_Back_Button"
+            >
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="Add Bill" /></activity>
         <activity android:name=".MainActivity" />
     </application>
 

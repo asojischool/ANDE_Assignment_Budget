@@ -111,6 +111,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         i = new Intent(MainActivity.this, Setting.class);
                         startActivity(i);
                         break;
+                    case R.id.miBill:
+                        i = new Intent(MainActivity.this, BillsActivity.class);
+                        startActivity(i);
+                        break;
                 }
                 return true;
             }
