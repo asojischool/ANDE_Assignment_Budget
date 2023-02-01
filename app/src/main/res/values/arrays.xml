@@ -13,4 +13,10 @@
         <item>@color/icon_light_green</item>
     </array>
 
+    <integer-array name="icons">
+        <item>@drawable/ic_baseline_fastfood</item>
+        <item>@drawable/ic_baseline_directions_car</item>
+        <item>@drawable/ic_baseline_local_grocery_store</item>
+    </integer-array>
+
 </resources>

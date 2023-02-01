@@ -1,6 +1,7 @@
 package com.example.ande_assignment_budget.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.example.ande_assignment_budget.Model.CategoryModel;
 import com.example.ande_assignment_budget.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CategorySpent_RecyclerViewAdapter extends RecyclerView.Adapter<CategorySpent_RecyclerViewAdapter.myViewHolder>  {
 
@@ -44,9 +46,10 @@ public class CategorySpent_RecyclerViewAdapter extends RecyclerView.Adapter<Cate
 
         int[] iconColor = context.getResources().getIntArray(R.array.iconColor);
         int[] iconBgColor = context.getResources().getIntArray(R.array.iconBgColor);
+        String catSpendingText = "$" + categoryModels.get(position).getCatSpent();
 
         holder.tvCatName.setText(categoryModels.get(position).getCatName());
-        holder.tvCatSpending.setText(categoryModels.get(position).getCatSpent());
+        holder.tvCatSpending.setText(catSpendingText);
         holder.ivCatLogo.setImageResource(categoryModels.get(position).getCatIcon());
         holder.ivCatLogo.setColorFilter(iconColor[position]);
         holder.clLogoBackground.getBackground().setTint(iconBgColor[position]);
@@ -58,8 +61,8 @@ public class CategorySpent_RecyclerViewAdapter extends RecyclerView.Adapter<Cate
         return categoryModels.size();
     }
 
-    class myViewHolder extends RecyclerView.ViewHolder {
-        // grabbing the views from category_recycler_view layout file
+    static class myViewHolder extends RecyclerView.ViewHolder {
+        // grabbing the views from category_recycler_view_row layout file
         // Kinda like in the onCreate method
 
         TextView tvCatName, tvCatSpending;
@@ -69,7 +72,7 @@ public class CategorySpent_RecyclerViewAdapter extends RecyclerView.Adapter<Cate
         myViewHolder(@NonNull View itemView) {
             super(itemView);
             tvCatName = itemView.findViewById(R.id.tvCatName);
-            tvCatSpending = itemView.findViewById(R.id.tvCatSpending);
+            tvCatSpending = itemView.findViewById(R.id.etCatBudget);
             ivCatLogo = itemView.findViewById(R.id.ivCatLogo);
             clLogoBackground = itemView.findViewById(R.id.clLogoBackground);
         }

@@ -47,14 +47,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setUpCategoryModels();
         setRecyclerList();
         setBottomNavigationBar();
-        seedDatabase();
+//        seedDatabase();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        setUpCategoryModels();
+        setRecyclerList();
     }
 
     private void setUpCategoryModels() {
-        categoryModels = new ArrayList<>();
-        categoryModels.add(new CategoryModel("Food", "$300", R.drawable.ic_baseline_fastfood));
-        categoryModels.add(new CategoryModel("Transport", "$400", R.drawable.ic_baseline_directions_car));
-        categoryModels.add(new CategoryModel("Grocery", "$800", R.drawable.ic_baseline_local_grocery_store));
+        db = new SqliteDbHandler(this);
+        categoryModels = db.getCurrentBudgetByMonth();
     }
 
     private void setRecyclerList() {
@@ -84,9 +90,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btnDatePicker) {
-            builder.build().show();
+        Intent i;
+        switch (v.getId()) {
+            case R.id.btnDatePicker:
+                builder.build().show();
+                break;
+            case R.id.btnSetUpBudget:
+                i = new Intent(MainActivity.this, SetBudget.class);
+                startActivity(i);
+                break;
         }
+
     }
 
     public void changeDate(String selectedMonth, int selectedYear) {
@@ -106,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Intent i;
-                switch(item.getItemId()) {
+                switch (item.getItemId()) {
                     case R.id.miSetting:
                         i = new Intent(MainActivity.this, Setting.class);
                         startActivity(i);
