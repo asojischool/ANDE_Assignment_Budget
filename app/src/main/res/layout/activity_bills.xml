@@ -42,7 +42,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvBills" />
+                app:layout_constraintTop_toBottomOf="@+id/tvBillsPaid" />
 
             <TextView
                 android:id="@+id/tvBillLeftAmt"
@@ -78,7 +78,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tvBills"
+                android:id="@+id/tvBillsPaid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"

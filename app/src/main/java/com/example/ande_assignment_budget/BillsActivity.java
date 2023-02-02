@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ande_assignment_budget.Adapter.Bills_RecyclerViewAdapter;
 import com.example.ande_assignment_budget.Adapter.CategorySpent_RecyclerViewAdapter;
+import com.example.ande_assignment_budget.DatabaseHandler.SqliteDbHandler;
 import com.example.ande_assignment_budget.Model.BillsModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -23,7 +24,8 @@ import java.util.ArrayList;
 
 public class BillsActivity extends AppCompatActivity implements View.OnClickListener {
     ArrayList<BillsModel> billModels;
-    double totalBill;
+    private SqliteDbHandler db;
+    double totalBill, billPaid, billLeft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +37,42 @@ public class BillsActivity extends AppCompatActivity implements View.OnClickList
         setRecyclerList();
 
         for(int i = 0; i < billModels.size(); i++){
-            totalBill += Double.parseDouble(billModels.get(i).getBillAmt().substring(1));
+            totalBill += billModels.get(i).getBillAmt();
+            if(billModels.get(i).getBillStatus() == 1){
+                billLeft += billModels.get(i).getBillAmt();
+            } else {
+                billPaid += billModels.get(i).getBillAmt();
+            }
         }
-
         TextView totalBillAmt = findViewById(R.id.tvTotalBills);
-        totalBillAmt.setText("$" + totalBill);
+        TextView leftBillAmt = findViewById(R.id.tvBillsLeft);
+        TextView paidBillAmt = findViewById(R.id.tvBillsPaid);
+        totalBillAmt.setText("$" + String.format("%.2f",totalBill));
+        leftBillAmt.setText("$" + String.format("%.2f", billLeft));
+        paidBillAmt.setText("$" + String.format("%.2f", billPaid));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setUpBillModels();
+        totalBill = 0;
+        billLeft = 0;
+        billPaid = 0;
+        for(int i = 0; i < billModels.size(); i++){
+            totalBill += billModels.get(i).getBillAmt();
+            if(billModels.get(i).getBillStatus() == 0){
+                billLeft += billModels.get(i).getBillAmt();
+            } else {
+                billPaid += billModels.get(i).getBillAmt();
+            }
+        }
+        TextView totalBillAmt = findViewById(R.id.tvTotalBills);
+        TextView leftBillAmt = findViewById(R.id.tvBillsLeft);
+        TextView paidBillAmt = findViewById(R.id.tvBillsPaid);
+        totalBillAmt.setText("$" + String.format("%.2f",totalBill));
+        leftBillAmt.setText("$" + String.format("%.2f", billLeft));
+        paidBillAmt.setText("$" + String.format("%.2f", billPaid));
     }
 
     // navigation bar, copy for all function
@@ -66,11 +99,8 @@ public class BillsActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void setUpBillModels(){
-        billModels = new ArrayList<>();
-        billModels.add(new BillsModel("Phone Bill", "$50", 4, "Paid"));
-        billModels.add(new BillsModel("Electricity Bill", "$457", 20, "Paid"));
-        billModels.add(new BillsModel("Entertainment Bill", "$45", 16, "Paid"));
-
+        db =  new SqliteDbHandler(this);
+        billModels = db.getAllBills();
     }
 
     private void setRecyclerList(){

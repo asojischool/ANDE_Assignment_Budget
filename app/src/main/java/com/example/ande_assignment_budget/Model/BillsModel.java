@@ -2,11 +2,11 @@ package com.example.ande_assignment_budget.Model;
 
 public class BillsModel {
     private String billName;
-    private String billAmt;
+    private double billAmt;
     private int billDueDay;
-    private String billStatus;
+    private int billStatus;
 
-    public BillsModel(String billName, String billAmt, int billDueDay, String billStatus) {
+    public BillsModel(String billName, double billAmt, int billDueDay, int billStatus) {
         this.billName = billName;
         this.billAmt = billAmt;
         this.billDueDay = billDueDay;
@@ -25,11 +25,11 @@ public class BillsModel {
         this.billDueDay = billDueDay;
     }
 
-    public void setBillAmt(String billAmt) {
+    public void setBillAmt(double billAmt) {
         this.billAmt = billAmt;
     }
 
-    public void setBillStatus(String billStatus) {
+    public void setBillStatus(int billStatus) {
         this.billStatus = billStatus;
     }
 
@@ -37,12 +37,11 @@ public class BillsModel {
         return billName;
     }
 
-    public String getBillAmt() {
+    public double getBillAmt() {
         return billAmt;
     }
 
-
-    public String getBillStatus() {
+    public int getBillStatus() {
         return billStatus;
     }
 }

@@ -64,7 +64,7 @@
         app:layout_constraintVertical_bias="0.087" />
 
     <Button
-        android:id="@+id/BtnPayBill"
+        android:id="@+id/btnPayBill"
         android:layout_width="92dp"
         android:layout_height="43dp"
         android:layout_marginTop="12dp"
@@ -76,15 +76,19 @@
         app:layout_constraintTop_toBottomOf="@+id/tvBillAmount" />
 
     <Button
-        android:id="@+id/btnEditBill"
-        android:layout_width="92dp"
+        android:id="@+id/btnDeleteBill"
+        android:layout_width="100dp"
         android:layout_height="43dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:text="edit"
+        android:clickable="true"
+        android:enabled="true"
+        android:text="Delete"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/BtnPayBill"
-        app:layout_constraintTop_toBottomOf="@+id/tvBillAmount" />
+        app:layout_constraintEnd_toStartOf="@+id/btnPayBill"
+        app:layout_constraintHorizontal_bias="0.809"
+        app:layout_constraintStart_toEndOf="@+id/tvBillDueDay"
+        app:layout_constraintTop_toBottomOf="@+id/tvBillAmount"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tvBillDueDay"
@@ -93,8 +97,6 @@
         android:text="30"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnEditBill"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clLogoBackground"
         app:layout_constraintVertical_bias="0.38" />
