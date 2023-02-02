@@ -31,6 +31,10 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Intent i;
                 switch(item.getItemId()) {
+                    case R.id.miBill:
+                        i = new Intent(Setting.this, BillsActivity.class);
+                        startActivity(i);
+                        break;
                     case R.id.miBudget:
                         i = new Intent(Setting.this, MainActivity.class);
                         startActivity(i);
