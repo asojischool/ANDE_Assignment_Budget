@@ -1,0 +1,67 @@
+package com.example.ande_assignment_budget;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.util.Log;
+import android.util.SparseArray;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.text.TextBlock;
+import com.google.android.gms.vision.text.TextRecognizer;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+
+public class ScanReceipt extends AppCompatActivity implements View.OnClickListener{
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_scan_receipt);
+
+        Spinner dropdown = findViewById(R.id.spinner);
+
+        String[] items = new String[]{"Food", "Transport", "Personal"};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        dropdown.setAdapter(adapter);
+
+        setBottomNavigationBar();
+    }
+
+    public void setBottomNavigationBar() {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.miBudget);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent i;
+                switch(item.getItemId()) {
+                    case R.id.miSetting:
+                        i = new Intent(ScanReceipt.this, Setting.class);
+                        startActivity(i);
+                        break;
+                }
+                return true;
+            }
+        });
+    }
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button2:
+                Intent i = new Intent(this, ExpenseActivity.class);
+                startActivity(i);
+                break;
+            case R.id.button:
+                break;
+        }
+    }
+}
