@@ -14,6 +14,7 @@
         android:layout_marginEnd="16dp"
         android:background="@android:color/transparent"
         android:text="Done"
+        android:onClick="onClick"
         android:textColor="@color/icon_green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,6 +26,7 @@
         android:layout_marginTop="16dp"
         android:background="@android:color/transparent"
         android:text="Add Expense"
+        android:onClick="onClick"
         android:textColor="@color/primary_color"
         app:icon="@drawable/ic_baseline_keyboard_arrow_left"
         app:iconTint="@color/black"
@@ -39,6 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="256dp"
         android:text="Choose Photo"
+        android:onClick="onClick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

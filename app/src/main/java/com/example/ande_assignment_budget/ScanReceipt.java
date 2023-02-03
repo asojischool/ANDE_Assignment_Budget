@@ -6,13 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class ScanReceipt extends AppCompatActivity {
+public class ScanReceipt extends AppCompatActivity implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,5 +46,15 @@ public class ScanReceipt extends AppCompatActivity {
                 return true;
             }
         });
+    }
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button2:
+                Intent i = new Intent(this, ExpenseActivity.class);
+                startActivity(i);
+                break;
+            case R.id.button:
+                break;
+        }
     }
 }

@@ -73,8 +73,14 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btnDatePicker) {
-            builder.build().show();
+        switch (v.getId()) {
+            case R.id.btnDatePicker:
+                builder.build().show();
+                break;
+            case R.id.button9:
+                Intent i = new Intent(this, ExpenseActivity.class);
+                startActivity(i);
+                break;
         }
     }
 

@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import com.example.ande_assignment_budget.Model.CategoryModel;
+import com.example.ande_assignment_budget.Model.Expense;
 import com.example.ande_assignment_budget.R;
 import com.example.ande_assignment_budget.SetBudget;
 
@@ -127,6 +128,46 @@ public class SqliteDbHandler extends SQLiteOpenHelper {
         cursor.close();
     }
 
+    public void addExpense(Expense expense) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put("title", expense.getTitle());
+        values.put("categoryId", expense.getCategory());
+        values.put("notes", expense.getNotes());
+        values.put("amount", expense.getAmount());
+
+        // Inserting Row
+        db.insert("Expense", null, values);
+        //2nd argument is String containing nullColumnHack
+        db.close(); // Closing database connection
+    }
+
+    public List<Expense> getAllExpense() {
+        List<Expense> expenseList = new ArrayList<Expense>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM Expense";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Expense expense = new Expense();
+                expense.setAmount(Float.parseFloat(cursor.getString(6)));
+                expense.setCategory(Integer.parseInt(cursor.getString(4)));
+                expense.setTitle(cursor.getString(2));
+                expense.setNotes(cursor.getString(5));
+                // Adding contact to list
+                expenseList.add(expense);
+            } while (cursor.moveToNext());
+        }
+
+        // return contact list
+        return expenseList;
+    }
+
     // seed dummy data
     public void seedTable() {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -146,6 +187,15 @@ public class SqliteDbHandler extends SQLiteOpenHelper {
         expenseValues.put("categoryId", "2");
         expenseValues.put("notes", "Rice, Whole Fried Chicken and Soup.");
         expenseValues.put("amount", 34.50);
+        db.insert("Expense", null, expenseValues);
+
+        expenseValues = new ContentValues();
+        expenseValues.put("userId", "D64TPnbOWUfZ3GcppDQVIQkHdgb2");
+        expenseValues.put("title", "Car Petrol");
+        expenseValues.put("date", "2023-02-01 00:00");
+        expenseValues.put("categoryId", "1");
+        expenseValues.put("notes", "At Shell.");
+        expenseValues.put("amount", 99.99);
         db.insert("Expense", null, expenseValues);
 
         // Insert data into the Budget table
