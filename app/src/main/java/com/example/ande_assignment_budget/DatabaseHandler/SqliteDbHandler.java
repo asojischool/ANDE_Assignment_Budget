@@ -1,5 +1,6 @@
 package com.example.ande_assignment_budget.DatabaseHandler;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
@@ -10,6 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
+import com.example.ande_assignment_budget.Model.BillsModel;
 import com.example.ande_assignment_budget.Model.CategoryModel;
 import com.example.ande_assignment_budget.Model.Expense;
 import com.example.ande_assignment_budget.R;
@@ -52,8 +54,7 @@ public class SqliteDbHandler extends SQLiteOpenHelper {
                 "(categoryId) REFERENCES Category(categoryId));");
 
         // Bill Table
-        db.execSQL("CREATE TABLE Bill (userId TEXT NOT NULL PRIMARY KEY, billName TEXT NOT NULL, billAmount REAL NOT NULL, FOREIGN KEY (userId) " +
-                "REFERENCES User(userId));");
+        db.execSQL("CREATE TABLE Bill (billName TEXT NOT NULL, billAmount REAL NOT NULL, billDay INTEGER NOT NULL, billStatus INTERGER NOT NULL, billUUID INTEGER NOT NULL)");
     }
 
     @Override
@@ -87,6 +88,84 @@ public class SqliteDbHandler extends SQLiteOpenHelper {
         }
         cursor.close();
         return categoryModels;
+    }
+
+    public ArrayList<BillsModel> getAllBills(){
+        String userId = "D64TPnbOWUfZ3GcppDQVIQkHdgb2";
+        ArrayList<BillsModel> billsModels = new ArrayList<>();
+
+        String query = "SELECT Bill.billName, Bill.billAmount, Bill.billDay, Bill.billStatus FROM Bill";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor != null && cursor.moveToFirst()){
+            do{
+                @SuppressLint("Range") String billName = cursor.getString(0);
+                @SuppressLint("Range") double billAmount = cursor.getDouble(1);
+                @SuppressLint("Range") int billDueDay = cursor.getInt(2);
+                @SuppressLint("Range") int billStatus = cursor.getInt(3);
+
+                billsModels.add(new BillsModel(billName, billAmount, billDueDay, billStatus));
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+        return billsModels;
+    }
+
+    public int getBillUUIDByName(String billName){
+        String query = "SELECT Bill.billUUID FROM Bill WHERE Bill.billName = ?";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()){
+            return cursor.getInt(0);
+        } else {
+            return 0;
+        }
+    }
+
+    public boolean createBill(String billName, double billAmt, int billDay, int billUUID){
+        try {
+            SQLiteDatabase db = this.getReadableDatabase();
+            String userId = "D64TPnbOWUfZ3GcppDQVIQkHdgb2";
+            ContentValues values = new ContentValues();
+
+//            values.put("userId", "D64TPnbOWUfZ3GcppDQVIQkHdgb2");
+            values.put("billName", billName);
+            values.put("billAmount", billAmt);
+            values.put("billDay", billDay);
+            values.put("billStatus", 0);
+            values.put("billUUID", billUUID);
+            db.insert("Bill", null, values);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public void updateBillStatus(String billName){
+        try {
+            SQLiteDatabase db = this.getReadableDatabase();
+            ContentValues values = new ContentValues();
+            values.put("billStatus", 1);
+
+            int rowsUpdated = db.update("Bill", values, "billName = ?", new String[]{billName});
+        } catch(Exception e){
+            e.printStackTrace();
+            return;
+        }
+    }
+
+    public void deleteBill(String billName){
+        try {
+            SQLiteDatabase db = this.getReadableDatabase();
+            db.delete("Bill", "billName = ?", new String[]{billName});
+        }catch(Exception e){
+            e.printStackTrace();
+            return;
+        }
     }
 
     public void setCurrentBudgetByMonth(int catId, double budgetAmount) {
@@ -206,6 +285,15 @@ public class SqliteDbHandler extends SQLiteOpenHelper {
         budgetValues.put("budgetAmount", 1000.00);
         budgetValues.put("categoryId", 2);
         db.insert("Budget", null, budgetValues);
+
+        ContentValues billValues = new ContentValues();
+//        billValues.put("userId", "D64TPnbOWUfZ3GcppDQVIQkHdgb2");
+        billValues.put("billName", "Test 1");
+        billValues.put("billAmount", 555);
+        billValues.put("billDay", 22);
+        billValues.put("billStatus", 0);
+        db.insert("Bill", null, billValues);
+
 
         ContentValues categoryValues = new ContentValues();
         categoryValues.put("categoryName", "Transport");
