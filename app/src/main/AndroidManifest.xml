@@ -10,25 +10,34 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ANDE_Assignment_Budget">
         <activity
+            android:name=".AnalyticActivity"
+            android:exported="false"
+            android:theme="@style/themeActionBarLight">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="Monthly Analytic" />
+        </activity>
+        <activity
             android:name=".SetBudget"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/themeActionBarLight">
+            android:theme="@style/themeActionBarLight"
+            android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="Set Monthly Budget" />
         </activity>
         <activity
             android:name=".BudgetHistory"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/themeActionBarLight">
             <meta-data
                 android:name="android.app.lib_name"
-                android:value="" />
+                android:value="Budget History" />
         </activity>
         <activity
             android:name=".UpdateProfile"
             android:exported="false"
-            android:theme="@style/Theme.Transparent_Action_Bar">
+            android:theme="@style/themeActionBarLight">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="Update Profile" />

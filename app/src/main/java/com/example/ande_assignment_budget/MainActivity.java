@@ -5,16 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.ande_assignment_budget.Adapter.CategorySpent_RecyclerViewAdapter;
 import com.example.ande_assignment_budget.DatabaseHandler.SqliteDbHandler;
 import com.example.ande_assignment_budget.Model.CategoryModel;
+import com.example.ande_assignment_budget.Utility.MathMethods;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.database.DataSnapshot;
@@ -33,21 +37,27 @@ import java.util.Map;
 import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
     private ArrayList<CategoryModel> categoryModels;
     private MonthPickerDialog.Builder builder;
     private SqliteDbHandler db;
+    private SharedPreferences preference;
+    private final Calendar today = Calendar.getInstance(TimeZone.getTimeZone("SGT"));
+    private int month = today.get(Calendar.MONTH);
+    private int year = today.get(Calendar.YEAR);
+
+    TextView tvTotalAmtSpent, tvMonthlyBudget, tvLeftToSpendAmt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        seedDatabase();
         monthYearPickerDialog();
         setUpCategoryModels();
         setRecyclerList();
         setBottomNavigationBar();
-//        seedDatabase();
+        setUpStatistics();
     }
 
     @Override
@@ -59,8 +69,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setUpCategoryModels() {
+        preference = getSharedPreferences("User", MODE_PRIVATE);
+
         db = new SqliteDbHandler(this);
-        categoryModels = db.getCurrentBudgetByMonth();
+        categoryModels = db.getCurrentBudgetByMonth(month+1, year, preference.getString("userId", null));
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void setUpStatistics() {
+        tvTotalAmtSpent = findViewById(R.id.tvTotalAmtSpent);
+        tvMonthlyBudget = findViewById(R.id.tvMonthlyBudget);
+        tvLeftToSpendAmt = findViewById(R.id.tvLeftToSpendAmt);
+
+        db = new SqliteDbHandler(this);
+        preference = getSharedPreferences("User", MODE_PRIVATE);
+
+        String userId = preference.getString("userId", null);
+
+        double sumExpenseByMonth = db.getSumExpenseByMonth(month+1, year, userId);
+        double sumMonthlyBudget = db.getSumMonthlyBudget(month+1, year, userId);
+
+        tvTotalAmtSpent.setText("" + MathMethods.round(sumExpenseByMonth, 2));
+        tvMonthlyBudget.setText("" + MathMethods.round(sumMonthlyBudget, 2));
+        tvLeftToSpendAmt.setText("" + MathMethods.round(sumMonthlyBudget - sumExpenseByMonth, 2));
     }
 
     private void setRecyclerList() {
@@ -72,11 +103,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void monthYearPickerDialog() {
-        Calendar today = Calendar.getInstance(TimeZone.getTimeZone("SGT"));
-        changeDate(dateToString(today.get(Calendar.MONTH)), today.get(Calendar.YEAR));
+        changeDate(dateToString(today.get(Calendar.MONTH)), today.get(Calendar.MONTH), today.get(Calendar.YEAR));
 
         builder = new MonthPickerDialog.Builder(MainActivity.this,
-                (selectedMonth, selectedYear) -> changeDate(dateToString(selectedMonth), selectedYear),
+                (selectedMonth, selectedYear) -> changeDate(dateToString(selectedMonth), selectedMonth, selectedYear),
                 today.get(Calendar.YEAR), today.get(Calendar.MONTH)
         );
 
@@ -99,13 +129,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 i = new Intent(MainActivity.this, SetBudget.class);
                 startActivity(i);
                 break;
+            case R.id.btnBudgetHistory:
+                i = new Intent(MainActivity.this, BudgetHistory.class);
+                startActivity(i);
+                break;
         }
 
     }
 
-    public void changeDate(String selectedMonth, int selectedYear) {
+    public void changeDate(String selectedMonth, int selectedMonthInteger, int selectedYear) {
         Button btnDatePicker = findViewById(R.id.btnDatePicker);
         btnDatePicker.setText(String.format(Locale.ENGLISH, "%s %d", selectedMonth, selectedYear));
+
+        month = selectedMonthInteger;
+        year = selectedYear;
+        setUpCategoryModels();
+        setUpStatistics();
+        setRecyclerList();
     }
 
     public String dateToString(int month) {
@@ -123,6 +163,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 switch (item.getItemId()) {
                     case R.id.miSetting:
                         i = new Intent(MainActivity.this, Setting.class);
+                        finish();
+                        startActivity(i);
+                        break;
+
+                    case R.id.miAnalytic:
+                        i = new Intent(MainActivity.this, AnalyticActivity.class);
                         startActivity(i);
                         break;
                 }

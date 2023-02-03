@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -25,12 +26,18 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 public class SetBudget extends AppCompatActivity implements View.OnClickListener {
     private ArrayList<CategoryModel> categoryModels;
     private RecyclerView rvBudgetCategory;
     private SqliteDbHandler db;
     private SetBudget_RecyclerViewAdapter adapter;
+    private SharedPreferences preference;
+    private final Calendar today = Calendar.getInstance(TimeZone.getTimeZone("SGT"));
+    private int month = today.get(Calendar.MONTH);
+    private int year = today.get(Calendar.YEAR);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,19 +61,16 @@ public class SetBudget extends AppCompatActivity implements View.OnClickListener
     private void setUpCategoryModels() {
         db = new SqliteDbHandler(this);
 
-
-        categoryModels = db.getCurrentBudgetByMonth();
-
-//        categoryModels = new ArrayList<>();
-//        categoryModels.add(new CategoryModel("Food", 300, R.drawable.ic_baseline_fastfood));
-//        categoryModels.add(new CategoryModel("Transport", 400, R.drawable.ic_baseline_directions_car));
-//        categoryModels.add(new CategoryModel("Grocery", 800, R.drawable.ic_baseline_local_grocery_store));
+        preference = getSharedPreferences("User", MODE_PRIVATE);
+        categoryModels = db.getCurrentBudgetByMonth(month + 1, year, preference.getString("userId", null));
     }
 
     private void setRecyclerList() {
         rvBudgetCategory = findViewById(R.id.rvBudgetCategory);
 
-        adapter = new SetBudget_RecyclerViewAdapter(this, categoryModels);
+        preference = getSharedPreferences("User", MODE_PRIVATE);
+
+        adapter = new SetBudget_RecyclerViewAdapter(this, categoryModels, preference.getString("userId", null));
         rvBudgetCategory.setAdapter(adapter);
         rvBudgetCategory.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -100,7 +104,6 @@ public class SetBudget extends AppCompatActivity implements View.OnClickListener
     // navigation bar use for all function
     public void setBottomNavigationBar() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.miBudget);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

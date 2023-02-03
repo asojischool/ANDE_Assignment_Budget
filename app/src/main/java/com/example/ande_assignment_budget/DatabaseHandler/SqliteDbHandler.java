@@ -11,12 +11,16 @@ import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import com.example.ande_assignment_budget.Model.CategoryModel;
+import com.example.ande_assignment_budget.Model.ExpenseAndrewModel;
+import com.example.ande_assignment_budget.Model.ExpenseBudgetModel;
 import com.example.ande_assignment_budget.R;
 import com.example.ande_assignment_budget.SetBudget;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 public class SqliteDbHandler extends SQLiteOpenHelper {
 
@@ -60,16 +64,80 @@ public class SqliteDbHandler extends SQLiteOpenHelper {
 
     }
 
-    public ArrayList<CategoryModel> getCurrentBudgetByMonth() {
-        String userId = "D64TPnbOWUfZ3GcppDQVIQkHdgb2";
-        int month = 2;
-        int year = 2023;
+    // seed dummy data
+    public void seedTable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Insert data into the User table
+        ContentValues userValues1 = new ContentValues();
+        userValues1.put("userId", "D64TPnbOWUfZ3GcppDQVIQkHdgb2");
+        userValues1.put("profilePicture", "profile1.jpg");
+        userValues1.put("name", "John");
+        db.insert("User", null, userValues1);
+
+        ContentValues userValues2 = new ContentValues();
+        userValues2.put("userId", "Exb6e0hvVaUMsWHmXMn6jKV2wHf2");
+        userValues2.put("profilePicture", "profile2.jpg");
+        userValues2.put("name", "Tom");
+        db.insert("User", null, userValues2);
+
+        // Insert data into the Expense table
+        ContentValues expenseValues = new ContentValues();
+        expenseValues.put("userId", "D64TPnbOWUfZ3GcppDQVIQkHdgb2");
+        expenseValues.put("title", "Lunch at Song Garden Restaurant");
+//        expenseValues.put("date", "2023-02-01 00:00");
+        expenseValues.put("categoryId", "2");
+        expenseValues.put("notes", "Rice, Whole Fried Chicken and Soup.");
+        expenseValues.put("amount", 34.50);
+        db.insert("Expense", null, expenseValues);
+
+        expenseValues = new ContentValues();
+        expenseValues.put("userId", "D64TPnbOWUfZ3GcppDQVIQkHdgb2");
+        expenseValues.put("title", "Bus to school");
+        expenseValues.put("date", "2022-12-29 12:01:18");
+        expenseValues.put("categoryId", "1");
+        expenseValues.put("notes", "Bus very good");
+        expenseValues.put("amount", 1.53);
+        db.insert("Expense", null, expenseValues);
+
+        // Insert data into the Budget table
+        ContentValues budgetValues = new ContentValues();
+        budgetValues.put("userId", "D64TPnbOWUfZ3GcppDQVIQkHdgb2");
+        budgetValues.put("month", 2);
+        budgetValues.put("year", 2023);
+        budgetValues.put("budgetAmount", 1000.00);
+        budgetValues.put("categoryId", 2);
+        db.insert("Budget", null, budgetValues);
+
+        budgetValues = new ContentValues();
+        budgetValues.put("userId", "D64TPnbOWUfZ3GcppDQVIQkHdgb2");
+        budgetValues.put("month", 12);
+        budgetValues.put("year", 2022);
+        budgetValues.put("budgetAmount", 543);
+        budgetValues.put("categoryId", 2);
+        db.insert("Budget", null, budgetValues);
+
+        ContentValues categoryValues = new ContentValues();
+        categoryValues.put("categoryName", "Transport");
+        db.insert("Category", null, categoryValues);
+
+        categoryValues = new ContentValues();
+        categoryValues.put("categoryName", "Food");
+        db.insert("Category", null, categoryValues);
+
+        categoryValues = new ContentValues();
+        categoryValues.put("categoryName", "Personal");
+        db.insert("Category", null, categoryValues);
+    }
+
+    // Budget Queries ----->
+    public ArrayList<CategoryModel> getCurrentBudgetByMonth(int month, int year, String userId) {
         ArrayList<CategoryModel> categoryModels = new ArrayList<>();
 
         String query = "SELECT Category.categoryId, IFNULL(Budget.budgetAmount, 0.00), Category.categoryName " +
                 "FROM Category LEFT JOIN Budget " +
                 "ON Category.categoryId = Budget.categoryId " +
-                "WHERE (Budget.userId = ? OR Budget.userId IS NULL) " +
+                "AND (Budget.userId = ? OR Budget.userId IS NULL) " +
                 "AND (Budget.month = ? OR Budget.month IS NULL) " +
                 "AND (Budget.year = ? OR Budget.year IS NULL)";
 
@@ -88,8 +156,7 @@ public class SqliteDbHandler extends SQLiteOpenHelper {
         return categoryModels;
     }
 
-    public void setCurrentBudgetByMonth(int catId, double budgetAmount) {
-        String userId = "D64TPnbOWUfZ3GcppDQVIQkHdgb2";
+    public void setCurrentBudgetByMonth(int catId, double budgetAmount, String userId) {
         int month = 2;
         int year = 2023;
 
@@ -116,7 +183,7 @@ public class SqliteDbHandler extends SQLiteOpenHelper {
             statement.execute();
         } else {
             ContentValues values = new ContentValues();
-            values.put("userId", "D64TPnbOWUfZ3GcppDQVIQkHdgb2");
+            values.put("userId", userId);
             values.put("month", month);
             values.put("year", year);
             values.put("budgetAmount", budgetAmount);
@@ -127,47 +194,151 @@ public class SqliteDbHandler extends SQLiteOpenHelper {
         cursor.close();
     }
 
-    // seed dummy data
-    public void seedTable() {
+    public double getSumMonthlyBudget(int month, int year, String userId) {
+        double sumBudgetAmount;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT IFNULL(SUM(budgetAmount), 0.00) FROM Budget WHERE userId = ? AND month = ? AND year = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{userId, String.valueOf(month), String.valueOf(year)});
+
+        if (cursor.moveToFirst()) {
+            sumBudgetAmount = cursor.getDouble(0);
+            // Use sumBudgetAmount
+        } else {
+            sumBudgetAmount = 0.00;
+        }
+
+        cursor.close();
+        return sumBudgetAmount;
+    }
+
+    // User Queries ----->
+    public void createUser(String userId, String profilePicture, String name) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // Insert data into the User table
         ContentValues userValues = new ContentValues();
-        userValues.put("userId", "D64TPnbOWUfZ3GcppDQVIQkHdgb2");
-        userValues.put("profilePicture", "profile1.jpg");
-        userValues.put("name", "John");
+        userValues.put("userId", userId);
+        userValues.put("profilePicture", profilePicture);
+        userValues.put("name", name);
         db.insert("User", null, userValues);
-
-        // Insert data into the Expense table
-        ContentValues expenseValues = new ContentValues();
-        expenseValues.put("userId", "D64TPnbOWUfZ3GcppDQVIQkHdgb2");
-        expenseValues.put("title", "Lunch at Song Garden Restaurant");
-        expenseValues.put("date", "2023-02-01 00:00");
-        expenseValues.put("categoryId", "2");
-        expenseValues.put("notes", "Rice, Whole Fried Chicken and Soup.");
-        expenseValues.put("amount", 34.50);
-        db.insert("Expense", null, expenseValues);
-
-        // Insert data into the Budget table
-        ContentValues budgetValues = new ContentValues();
-        budgetValues.put("userId", "D64TPnbOWUfZ3GcppDQVIQkHdgb2");
-        budgetValues.put("month", 2);
-        budgetValues.put("year", 2023);
-        budgetValues.put("budgetAmount", 1000.00);
-        budgetValues.put("categoryId", 2);
-        db.insert("Budget", null, budgetValues);
-
-        ContentValues categoryValues = new ContentValues();
-        categoryValues.put("categoryName", "Transport");
-        db.insert("Category", null, categoryValues);
-
-        categoryValues = new ContentValues();
-        categoryValues.put("categoryName", "Food");
-        db.insert("Category", null, categoryValues);
-
-        categoryValues = new ContentValues();
-        categoryValues.put("categoryName", "Personal");
-        db.insert("Category", null, categoryValues);
     }
+
+    // Expense Queries ----->
+    // get all expense
+    public double getSumExpenseByMonth(int month, int year, String userId) {
+        double sumExpenseAmount;
+        String date;
+
+        if (month < 10 && month > 0) {
+            date = "%" + year + "-0" + month + "%";
+        } else {
+            date = "%" + year + "-" + month + "%";
+        }
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT IFNULL(SUM(amount), 0.00) FROM Expense WHERE userId = ? AND date LIKE ?";
+        Cursor cursor = db.rawQuery(query, new String[]{userId, date});
+
+        if (cursor.moveToFirst()) {
+            sumExpenseAmount = cursor.getDouble(0);
+            Log.d("SumExpense", "Pass with value " + date);
+            // Use sumAmount
+        } else {
+            Log.d("SumExpense", "Fail");
+            sumExpenseAmount = 0.00;
+        }
+        cursor.close();
+        return sumExpenseAmount;
+    }
+
+    public ArrayList<ExpenseAndrewModel> getSumExpenseEachCatByMonth(int month, int year, String userId) {
+        ArrayList<ExpenseAndrewModel> expenseAndrewModel = new ArrayList<>();;
+        SQLiteDatabase db = this.getReadableDatabase();
+        String stringMonth = "";
+
+        String query = "SELECT Category.categoryName, SUM(Expense.amount), Expense.categoryID " +
+                "FROM Expense LEFT JOIN Category " +
+                "ON Expense.categoryId = Category.categoryId " +
+                "WHERE userId = ? " +
+                "AND strftime('%m', Expense.date) = ? " +
+                "AND strftime('%Y', Expense.date) = ? " +
+                "GROUP BY Expense.categoryID";
+
+        if (("" + month).length() == 1) {
+            stringMonth = "0" + month;
+        } else {
+            stringMonth = "" + month;
+        }
+
+        Cursor cursor = db.rawQuery(query, new String[]{userId, stringMonth, ""+year});
+        while (cursor.moveToNext()) {
+            String categoryName = cursor.getString(0);
+            double expenseAmount = cursor.getDouble(1);
+
+            expenseAndrewModel.add(new ExpenseAndrewModel(expenseAmount, categoryName));
+        }
+
+        cursor.close();
+        return expenseAndrewModel;
+    }
+
+    // Other/Mix Queries ----->
+    public ArrayList<ExpenseBudgetModel> getTotalBudgetExpenseWithinRange(String userId) {
+        ArrayList<ExpenseBudgetModel> expenseBudgetModel = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // get current year and month
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("SGT"));
+        int currentMonth = calendar.get(Calendar.MONTH) + 1;
+        int currentYear = calendar.get(Calendar.YEAR);
+
+        String query = "SELECT month, year, SUM(budgetAmount) AS budgetAmount " +
+                "FROM Budget " +
+                "WHERE userId = ? " +
+                "AND (year < ? OR (year = ? AND month < ?)) " +
+                "GROUP BY month, year " +
+                "ORDER BY year desc, month desc " +
+                "LIMIT 4;";
+
+        Cursor cursor = db.rawQuery(query, new String[]{userId, Integer.toString(currentYear), Integer.toString(currentYear),
+                Integer.toString(currentMonth)});
+
+        Log.d("MonthYearBudgetAmount", "3. " + cursor.getCount() + " Month = " + currentMonth + " Year = " + currentYear);
+
+        while (cursor.moveToNext()) {
+            int month = cursor.getInt(0);
+            int year = cursor.getInt(1);
+            double budgetAmount = cursor.getDouble(2);
+
+            Log.d("MonthYearBudgetAmount", "1" + month + year + budgetAmount);
+
+            // Do something with the data
+            String expenseQuery = "SELECT SUM(amount) AS amount " +
+                    "FROM Expense " +
+                    "WHERE userId = ? " +
+                    "AND strftime('%m', date) = ? " +
+                    "AND strftime('%Y', date) = ?";
+
+            String[] expenseArgs = {userId, Integer.toString(month), Integer.toString(year)};
+
+            Cursor expenseCursor = db.rawQuery(expenseQuery, expenseArgs);
+
+            if (expenseCursor.moveToNext()) {
+                double amount = expenseCursor.getDouble(0);
+
+                Log.d("MonthYearBudgetAmount", "2" + month + year + budgetAmount + amount);
+
+                expenseBudgetModel.add(new ExpenseBudgetModel(month, year, budgetAmount, amount));
+            }
+
+            expenseCursor.close();
+        }
+
+        cursor.close();
+        return expenseBudgetModel;
+    }
+
 
 }

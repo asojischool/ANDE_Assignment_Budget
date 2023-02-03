@@ -1,7 +1,10 @@
 package com.example.ande_assignment_budget.Adapter;
 
+import static java.lang.Math.round;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -21,9 +24,12 @@ import com.example.ande_assignment_budget.MainActivity;
 import com.example.ande_assignment_budget.Model.CategoryModel;
 import com.example.ande_assignment_budget.R;
 import com.example.ande_assignment_budget.SetBudget;
+import com.example.ande_assignment_budget.Utility.MathMethods;
 
 import org.w3c.dom.Text;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,16 +37,17 @@ public class SetBudget_RecyclerViewAdapter extends RecyclerView.Adapter<SetBudge
 
     private final Context context;
     private final ArrayList<CategoryModel> categoryModels;
+    private final String userId;
     private List<EditText> etCatBudgetsValues = new ArrayList<>();
 
-    // confirm whether text is change
     private final ArrayList<Double> tempBudgetValues = new ArrayList<>();
     private double sum = 0;
 
     // constructor
-    public SetBudget_RecyclerViewAdapter(Context context, ArrayList<CategoryModel> categoryModels) {
+    public SetBudget_RecyclerViewAdapter(Context context, ArrayList<CategoryModel> categoryModels, String userId) {
         this.context = context;
         this.categoryModels = categoryModels;
+        this.userId = userId;
 
         for (int i = 0; i < categoryModels.size(); i++) {
             tempBudgetValues.add(categoryModels.get(i).getCatSpent());
@@ -104,8 +111,7 @@ public class SetBudget_RecyclerViewAdapter extends RecyclerView.Adapter<SetBudge
                     sum += value;
                 }
 
-                Log.d("Budget", "Total Budget: " + sum);
-                ((SetBudget)context).setBudgetSum(sum);
+                ((SetBudget)context).setBudgetSum(MathMethods.round(sum, 2));
             }
         });
     }
@@ -136,12 +142,13 @@ public class SetBudget_RecyclerViewAdapter extends RecyclerView.Adapter<SetBudge
     public void updateBudgetAmount() {
         for (int i = 0; i < etCatBudgetsValues.size(); i++) {
             EditText etBudgetValue = etCatBudgetsValues.get(i);
-            Double budgetAmount = Double.parseDouble(etBudgetValue.getText().toString());
+            Double budgetAmount = MathMethods.round(Double.parseDouble(etBudgetValue.getText().toString()), 2);
             int catId = categoryModels.get(i).getCatId();
 
             // add to database
+            Log.d("User Id", ""+userId);
             SqliteDbHandler db = new SqliteDbHandler(context);
-            db.setCurrentBudgetByMonth(catId, budgetAmount);
+            db.setCurrentBudgetByMonth(catId, budgetAmount, userId);
         }
     }
 }

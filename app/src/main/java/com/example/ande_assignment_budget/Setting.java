@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,8 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Setting extends AppCompatActivity implements View.OnClickListener {
+
+    private SharedPreferences preference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,12 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
                 switch(item.getItemId()) {
                     case R.id.miBudget:
                         i = new Intent(Setting.this, MainActivity.class);
+                        finish();
+                        startActivity(i);
+                        break;
+
+                    case R.id.miAnalytic:
+                        i = new Intent(Setting.this, AnalyticActivity.class);
                         startActivity(i);
                         break;
                 }
@@ -49,12 +58,20 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
                 FirebaseAuth.getInstance().signOut();
                 i = new Intent(Setting.this, Login.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                // clear shared preference
+                preference = getSharedPreferences("User", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preference.edit();
+                editor.clear();
+                editor.apply();
+
                 startActivity(i);
                 break;
 
             case R.id.btnUpdateProfile:
                 i = new Intent(Setting.this, UpdateProfile.class);
                 startActivity(i);
+                break;
         }
     }
 }

@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/iconHistory"
+        android:id="@+id/btnBudgetHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#00FFFFFF"
@@ -16,7 +16,7 @@
         android:text="History"
         android:textColor="@color/primary_color"
         android:textSize="10sp"
-
+        android:onClick="onClick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,17 +34,30 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/tvDollar1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/dm_sans_bold"
+        android:text="$"
+        android:textSize="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTotalAmtSpent"
+        app:layout_constraintEnd_toStartOf="@+id/tvTotalAmtSpent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvTotalAmtSpent" />
+
+    <TextView
         android:id="@+id/tvTotalAmtSpent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/dm_sans_bold"
-        android:text="$1812"
+        android:text="1812"
         android:textSize="48dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvDollar1"
         app:layout_constraintTop_toBottomOf="@+id/btnDatePicker" />
-
 
     <Button
         android:id="@+id/btnDatePicker"
@@ -84,8 +97,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Set Up Budget"
                 android:onClick="onClick"
+                android:text="Set Up Budget"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -103,14 +116,25 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tvLefToSpendAmt"
+                android:id="@+id/tvDollar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/dm_sans_bold"
+                android:text="$"
+                android:textSize="14dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvLeftToSpendAmt"
+                app:layout_constraintStart_toStartOf="@+id/tvLefToSpend"
+                app:layout_constraintTop_toTopOf="@+id/tvLeftToSpendAmt" />
+
+            <TextView
+                android:id="@+id/tvLeftToSpendAmt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/dm_sans_bold"
-                android:text="$738"
+                android:text="738"
                 android:textSize="14dp"
-                app:layout_constraintStart_toStartOf="@+id/tvLefToSpend"
+                app:layout_constraintStart_toEndOf="@+id/tvDollar2"
                 app:layout_constraintTop_toBottomOf="@+id/tvLefToSpend" />
 
             <TextView
@@ -125,14 +149,25 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/tvDollar3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/dm_sans_bold"
+                android:text="$"
+                android:textSize="14dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvMonthlyBudget"
+                app:layout_constraintStart_toStartOf="@+id/tvMonthlyBudgetAmt"
+                app:layout_constraintTop_toTopOf="@+id/tvMonthlyBudget" />
+
+            <TextView
                 android:id="@+id/tvMonthlyBudget"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/dm_sans_bold"
-                android:text="$2550"
+                android:text="2550"
                 android:textSize="14dp"
-                app:layout_constraintStart_toStartOf="@+id/tvMonthlyBudgetAmt"
+                app:layout_constraintStart_toEndOf="@+id/tvDollar3"
                 app:layout_constraintTop_toBottomOf="@+id/tvMonthlyBudgetAmt" />
 
             <androidx.constraintlayout.widget.Guideline
@@ -140,7 +175,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="176dp" />
+                app:layout_constraintGuide_percent="0.5014245" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
