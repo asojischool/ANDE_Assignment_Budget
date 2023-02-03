@@ -43,13 +43,13 @@ public class ExpenseActivity extends AppCompatActivity {
             Integer catId = ex.getCategory();
             String amount = ex.getAmount().toString();
             if (catId.equals(1)) {
-                expenseModels.add(new ExpenseModel(ex.getTitle(), amount, R.drawable.ic_baseline_directions_car));
+                expenseModels.add(new ExpenseModel(ex.getTitle(), "$" + amount, R.drawable.ic_baseline_directions_car));
             }
             if (catId.equals(2)) {
-                expenseModels.add(new ExpenseModel(ex.getTitle(), amount, R.drawable.ic_baseline_fastfood));
+                expenseModels.add(new ExpenseModel(ex.getTitle(), "$" + amount, R.drawable.ic_baseline_fastfood));
             }
             if (catId.equals(3)) {
-                expenseModels.add(new ExpenseModel(ex.getTitle(), amount, R.drawable.ic_baseline_local_grocery_store));
+                expenseModels.add(new ExpenseModel(ex.getTitle(), "$" + amount, R.drawable.ic_baseline_local_grocery_store));
             }
         }
     }
@@ -83,7 +83,7 @@ public class ExpenseActivity extends AppCompatActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button7:
-                Intent i = new Intent(this, ExpenseActivity.class);
+                Intent i = new Intent(this, AddExpense.class);
                 startActivity(i);
                 break;
             case R.id.button8:

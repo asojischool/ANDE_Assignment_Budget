@@ -66,6 +66,7 @@
         android:textColor="@color/primary_color"
         app:icon="@drawable/ic_baseline_keyboard_arrow_left"
         app:iconTint="@color/black"
+        android:onClick="onClick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.076"
         app:layout_constraintStart_toStartOf="parent"

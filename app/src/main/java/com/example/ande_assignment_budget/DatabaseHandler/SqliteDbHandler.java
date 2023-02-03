@@ -211,6 +211,7 @@ public class SqliteDbHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        values.put("userId", "D64TPnbOWUfZ3GcppDQVIQkHdgb2");
         values.put("title", expense.getTitle());
         values.put("categoryId", expense.getCategory());
         values.put("notes", expense.getNotes());
