@@ -11,6 +11,32 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ANDE_Assignment_Budget">
         <activity
+            android:name=".Setting"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Login"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ExpenseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Splashscreen"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".SetBudget"
             android:exported="false"
             android:windowSoftInputMode="adjustPan"
@@ -42,30 +68,25 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Setting"
+            android:name=".ScanReceipt"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Login"
+            android:name=".PaymentActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ExpenseActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Splashscreen"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:name=".AddExpense"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
         <activity android:name=".BillsActivity"></activity>
         <activity
@@ -81,6 +102,7 @@
             android:exported="true">
         </receiver>
         <activity android:name=".MainActivity" />
+
     </application>
 
 </manifest>
