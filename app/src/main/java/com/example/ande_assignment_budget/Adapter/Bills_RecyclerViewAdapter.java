@@ -2,14 +2,12 @@ package com.example.ande_assignment_budget.Adapter;
 
 import static android.app.PendingIntent.FLAG_MUTABLE;
 import static android.content.Context.ALARM_SERVICE;
-import static androidx.core.app.ActivityCompat.recreate;
 
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +18,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ande_assignment_budget.BillsActivity;
-import com.example.ande_assignment_budget.BillsEditActivity;
 import com.example.ande_assignment_budget.BroadcastReceiver.BillReminder;
 import com.example.ande_assignment_budget.DatabaseHandler.SqliteDbHandler;
 import com.example.ande_assignment_budget.Model.BillsModel;
