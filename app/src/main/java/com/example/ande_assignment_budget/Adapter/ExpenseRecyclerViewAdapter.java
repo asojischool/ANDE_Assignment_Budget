@@ -12,7 +12,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ande_assignment_budget.Model.ExpenseModel;
-import com.example.ande_assignment_budget.Model.PaymentModel;
 import com.example.ande_assignment_budget.R;
 
 import java.util.ArrayList;
@@ -38,16 +37,20 @@ public class ExpenseRecyclerViewAdapter extends RecyclerView.Adapter<ExpenseRecy
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ExpenseRecyclerViewAdapter.myViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
 
         int[] iconColor = context.getResources().getIntArray(R.array.iconColor);
         int[] iconBgColor = context.getResources().getIntArray(R.array.iconBgColor);
+        int p = position;
 
         holder.tvTitle.setText(expenseModels.get(position).getTitle());
         holder.tvSpent.setText(expenseModels.get(position).getSpent());
         holder.ivExpLogo.setImageResource(expenseModels.get(position).getExpIcon());
-        holder.ivExpLogo.setColorFilter(iconColor[position]);
-        holder.clLogoBackground.getBackground().setTint(iconBgColor[position]);
+        if (position > 2) {
+            p = position % 3;
+        }
+        holder.ivExpLogo.setColorFilter(iconColor[p]);
+        holder.clLogoBackground.getBackground().setTint(iconBgColor[p]);
     }
 
     @Override
